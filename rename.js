@@ -10,19 +10,31 @@ var arguments = process.argv.slice(2);
 
 //show help
 if (arguments.length === 0 || arguments[0].match('help')) {
-    console.log('%c --help\n\t-h  haha\n', 'color:red');
+    console.log('--help\n\t-n  file name 文件名\n\t-i  file name index 文件\n');
 }
 
 var name = arguments[0];
-var index = arguments[1]||0;
+var index = arguments[1] || 0;
 
 //read file directors
 fs.readdir(src, function (err, files) {
     if (err) {
         console.log(err);
     } else {
+        fs.exists(dist, function (exist) {
+            if (exist) {
+                copy(files);
+            } else {
+                fs.mkdir(dist, function () {
+                    copy(files);
+                })
+            }
+        });
+    }
+
+    function copy(_files) {
         //foreach files
-        files.forEach(function (filename) {
+        _files.forEach(function (filename) {
             var readStream, writeStream;
             var arr = filename.split('.');
             var oldPath = src + '/' + filename,
