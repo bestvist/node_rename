@@ -1,20 +1,25 @@
 /**
  * Created by Administrator on 2016/12/2.
  */
-var fs = require("fs"),
+var fs = require('fs'),
     src = 'src',
     dist = 'dist',
     stat = fs.stat;
 
-var arguments = process.argv.slice(2);
+var args = process.argv.slice(2),name,index=0;
 
 //show help
-if (arguments.length === 0 || arguments[0].match('help')) {
-    console.log('--help\n\t-n  file name 文件名\n\t-i  file name index 文件\n');
+if (args.length === 0 || args[0].match('help')) {
+    console.log('--help\n\t-n  file name 文件名\n\t-i  file name index 文件索引\n');
 }
 
-var name = arguments[0];
-var index = arguments[1] || 0;
+args.forEach(function (item, _index) {
+    if (item.match('-n')) {
+        name = args[_index + 1];
+    } else if (item.match('-i')) {
+        index = args[_index + 1];
+    }
+});
 
 //read file directors
 fs.readdir(src, function (err, files) {
