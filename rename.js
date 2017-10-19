@@ -1,12 +1,8 @@
-/**
- * Created by vist on 2016/12/2.
- */
 let fs = require('fs'),
     src = 'src',
     dist = 'dist',
-    stat = fs.stat,
     args = process.argv.slice(2),
-    filename,
+    filename = 'image',
     index = 0;
 
 //show help
@@ -27,7 +23,6 @@ args.forEach((item, i) => {
     }
 });
 
-//read file directors
 fs.readdir(src, (err, files) => {
     if (err) {
         console.log(err);
@@ -51,10 +46,10 @@ function copyFile(files, src, dist, filename, index) {
             arr = n.split('.'),
             oldPath = src + '/' + n,
             newPath = dist + '/' + filename + index + '.' + arr[arr.length - 1];
-        stat(oldPath, (err, file) => {
+        fs.stat(oldPath, (err, stats) => {
             if (err) {
                 console.log(err);
-            } else if (file.isFile()) {
+            } else if (stats.isFile()) {
                 readStream = fs.createReadStream(oldPath);
                 writeStream = fs.createWriteStream(newPath);
                 readStream.pipe(writeStream);
@@ -63,3 +58,4 @@ function copyFile(files, src, dist, filename, index) {
         index++;
     })
 }
+
