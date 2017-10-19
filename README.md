@@ -18,4 +18,4 @@
 
 ## 示例
 
-![rename](http://ox2ualtw3.bkt.clouddn.com/node-rename.gif)
+![rename](http://ox2ualtw3.bkt.clouddn.com/node-rename2.gif)
